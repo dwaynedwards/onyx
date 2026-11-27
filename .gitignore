@@ -1,0 +1,8 @@
+# IDEs
+.idea
+
+# Output
+build
+
+# OS
+.DS_Store
