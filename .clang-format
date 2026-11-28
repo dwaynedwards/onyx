@@ -1,8 +1,9 @@
 ---
 BasedOnStyle: LLVM
-AlignConsecutiveMacros: "Consecutive"
-AlignConsecutiveAssignments: "Consecutive"
-AlignConsecutiveDeclarations: "Consecutive"
+AlignConsecutiveMacros: Consecutive
+AlignConsecutiveAssignments: Consecutive
+AlignConsecutiveDeclarations: Consecutive
+AllowShortEnumsOnASingleLine: true
 AlignOperands: Align
 AlignTrailingComments: false
 AllowShortCaseLabelsOnASingleLine: true
@@ -13,7 +14,7 @@ BraceWrapping:
   AfterCaseLabel: true
   AfterClass: true
   AfterControlStatement: Always
-  AfterEnum: true
+  AfterEnum: false
   AfterFunction: true
   AfterNamespace: true
   AfterStruct: true
@@ -29,20 +30,35 @@ BraceWrapping:
   SplitEmptyNamespace: true
 BreakBeforeBraces: Custom
 ColumnLimit: 120
+IncludeBlocks: Regroup
 IncludeCategories:
-  - Regex: '^<.*'
+  # 1. Corresponding header in .cpp files
+  - Regex: '^"onyx/.*\.hpp"$'
     Priority: 1
-  - Regex: '^".*'
+    SortPriority: 1
+  # 2. Third-party libraries
+  - Regex: '^<catch2/.*>$'
     Priority: 2
-  - Regex: '.*'
+    SortPriority: 2
+  # 3. C++ Standard Library headers
+  - Regex: '^<[a-zA-Z0-9_]+>$'
     Priority: 3
+    SortPriority: 3
+  # 4. C / OS / System SDK headers
+  - Regex: '^<.*\.h>$'
+    Priority: 4
+    SortPriority: 4
 IncludeIsMainRegex: '([-_](test|unittest))?$'
 IndentCaseLabels: true
+IndentPPDirectives: BeforeHash
 InsertNewlineAtEOF: true
 MacroBlockBegin: ''
 MacroBlockEnd: ''
 MaxEmptyLinesToKeep: 2
+NamespaceIndentation: All
+PPIndentWidth: 2
 PointerAlignment: Left
+SortIncludes: CaseSensitive
 SpaceBeforeRangeBasedForLoopColon: false
 SpaceInEmptyParentheses: false
 SpacesInAngles: Never
@@ -50,4 +66,4 @@ SpacesInConditionalStatement: false
 SpacesInCStyleCastParentheses: false
 SpacesInParentheses: false
 TabWidth: 2
-...
+---
