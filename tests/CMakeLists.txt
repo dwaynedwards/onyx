@@ -26,3 +26,5 @@ function(onyx_add_test target_name)
 endfunction()
 
 add_subdirectory(arena)
+add_subdirectory(list)
+add_subdirectory(string)

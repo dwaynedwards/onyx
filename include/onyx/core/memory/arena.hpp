@@ -127,6 +127,25 @@ namespace onyx
       return static_cast<T*>(alloc_zeroed(sizeof(T) * count, alignof(T)));
     }
 
+    [[nodiscard]] ONYX_ALWAYS_INLINE bool
+    try_extend(void* addr, usize old_bytes, usize new_bytes) noexcept
+    {
+      if (!addr || new_bytes <= old_bytes)
+      {
+        return new_bytes <= old_bytes;
+      }
+
+      const uptr end = reinterpret_cast<uptr>(addr) + old_bytes;
+      if (end != offset_)
+      {
+        return false; // Not at the top of the arena
+      }
+
+      const usize extra = new_bytes - old_bytes;
+      return alloc(extra, 1) != nullptr;
+    }
+
+
     void
     reset() noexcept
     {
