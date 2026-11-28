@@ -11,9 +11,11 @@
 #include <span>
 #include <type_traits>
 
+
 namespace onyx
 {
-  template <typename T> struct List
+  template <typename T>
+  struct List
   {
     static_assert(std::is_trivially_copyable_v<T>, "List<T> requires trivially copyable types");
 
@@ -36,10 +38,9 @@ namespace onyx
 
       if (new_cap > SIZE_MAX / sizeof(T)) [[unlikely]]
       {
-        return false; // Element byte size overflow
+        return false;
       }
 
-      // Fast path: extend in-place if this buffer sits at the very top of `arena`
       if (data != nullptr && arena->try_extend(data, cap * sizeof(T), new_cap * sizeof(T)))
       {
         cap = new_cap;
@@ -82,6 +83,18 @@ namespace onyx
       return data[--len];
     }
 
+    // O(1) unordered removal: replaces element at `idx` with the last element
+    void
+    pop_swap(usize idx) noexcept
+    {
+      assert(idx < len && "pop_swap index out of bounds");
+      --len;
+      if (idx != len)
+      {
+        data[idx] = data[len];
+      }
+    }
+
     void
     clear() noexcept
     {
@@ -92,6 +105,20 @@ namespace onyx
     is_empty() const noexcept
     {
       return len == 0;
+    }
+
+    T&
+    last() noexcept
+    {
+      assert(len > 0 && "List is empty");
+      return data[len - 1];
+    }
+
+    const T&
+    last() const noexcept
+    {
+      assert(len > 0 && "List is empty");
+      return data[len - 1];
     }
 
     T&
@@ -108,7 +135,6 @@ namespace onyx
       return data[idx];
     }
 
-    // Range-based `for (auto& x : list)` & `std::span` support
     T*
     begin() noexcept
     {

@@ -16,7 +16,8 @@ using namespace onyx;
 // Teaches Catch2 how to print onyx::String values on failure instead of `{?}`
 namespace Catch
 {
-  template <> struct StringMaker<onyx::String>
+  template <>
+  struct StringMaker<onyx::String>
   {
     static std::string
     convert(onyx::String s)

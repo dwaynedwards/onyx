@@ -29,6 +29,7 @@ BraceWrapping:
   SplitEmptyRecord: true
   SplitEmptyNamespace: true
 BreakBeforeBraces: Custom
+BreakTemplateDeclarations: Yes
 ColumnLimit: 120
 IncludeBlocks: Regroup
 IncludeCategories:

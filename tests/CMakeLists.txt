@@ -27,4 +27,6 @@ endfunction()
 
 add_subdirectory(arena)
 add_subdirectory(list)
+add_subdirectory(map)
+add_subdirectory(slot_map)
 add_subdirectory(string)

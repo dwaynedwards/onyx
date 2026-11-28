@@ -16,6 +16,7 @@
 #include <type_traits>
 #include <utility>
 
+
 namespace onyx
 {
   namespace internal
@@ -180,7 +181,8 @@ namespace onyx
 
 } // namespace onyx
 
-template <> struct std::formatter<onyx::String, char> : std::formatter<std::string_view, char>
+template <>
+struct std::formatter<onyx::String, char> : std::formatter<std::string_view, char>
 {
   template <typename FormatContext>
   auto
